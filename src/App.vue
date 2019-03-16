@@ -1,8 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <span class="router-text-codetest">webコードテスト</span>
+      <span class="router-button">
+        <router-link to="/">Home</router-link>
+      </span>
+      <span class="router-button">
+        <router-link to="/about">お問合せ</router-link>
+      </span>
     </div>
     <router-view/>
   </div>
@@ -17,7 +22,8 @@
   color: #2c3e50;
 }
 #nav {
-  padding: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 #nav a {
@@ -28,4 +34,15 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.router-button {
+  padding-right: 2vw;
+}
+
+.router-text-codetest {
+  padding-right: 50vw;
+  font-size: 150%;
+  font-weight: 600;
+}
+
 </style>
