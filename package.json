@@ -10,7 +10,10 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.14",
+    "jquery": "^1.9.1",
     "monaco-editor": "^0.16.0",
+    "monaco-editor-webpack-plugin": "^1.7.0",
+    "source-map-support": "^0.5.11",
     "vue": "^2.6.9",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
