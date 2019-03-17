@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <span class="router-text-codetest">webコードテスト</span>
+      <span class="router-text-codetest">web code test</span>
       <span class="router-button">
         <router-link to="/">Home</router-link>
       </span>
