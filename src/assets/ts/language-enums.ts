@@ -1,10 +1,11 @@
 interface LanguagesInterface {
-  TS_BROWSER: number;
-  JS_BROWSER: number;
+  TS_BROWSER: string;
+  JS_BROWSER: string;
+  [key: string]: string;
 }
 
 // Don't change Enum member's number so that use const Enum
 export const languages: LanguagesInterface = {
-  TS_BROWSER: 1,
-  JS_BROWSER: 2,
+  TS_BROWSER: 'typescript',
+  JS_BROWSER: 'javascript',
 };

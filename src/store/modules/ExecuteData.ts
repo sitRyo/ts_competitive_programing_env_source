@@ -7,7 +7,7 @@ export interface ExecuteDataStates {
   input: string;
   output: string;
   error: string;
-  lang: number;
+  lang: string;
 }
 
 export interface ExecuteDataGetters {
@@ -51,6 +51,7 @@ const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataM
   submitCode({commit}, payload) {
     // non-null
     let result: string = state.code;
+    // console.log(languages.TS_BROWSER);
     commit('pushCode', payload);
     switch (state.lang) {
       case languages.TS_BROWSER: 
