@@ -5,7 +5,7 @@
     </div>
     <b-row class="button-wrapper">
       <b-col>
-        <b-form-select v-model="selected" :options="options" size="sm" id="form-select" class="mt-1"/>
+        <b-form-select v-model="language" :options="options" size="sm" id="form-select" class="mt-1"/>
       </b-col>
       <b-col>
         <b-button id="button-run" class="pl-3 pr-3" @click="submit()">run</b-button>
@@ -60,8 +60,15 @@ export default class Editor extends Vue {
   }
 
   public submit(): void {
+    // null check 
+    // if this.language equals to null, user doesn't selected input language.
+    if (this.language === null) {
+      window.alert('使用する言語を選んでください');
+      return;
+    }
+    
     if (this.editor !== null) {
-      this.$store.dispatch('executedata/submitCode', { 'code': this.editor.getValue() });
+      this.$store.dispatch('executedata/submitCode', { 'code': this.editor.getValue(), 'lang': this.language });
     }
   }
 }

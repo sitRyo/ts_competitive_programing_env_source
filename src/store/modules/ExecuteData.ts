@@ -19,12 +19,21 @@ export interface ExecuteDataMutations {
     // mutationPayloadType
     code: string;
   };
+
+  pushLanguage: {
+    lang: string;
+  };
+
+  pushOutput: {
+    out: string;
+  }
 }
 
 export interface ExecuteDataActions {
   // DefineActions has {commit} as a first parameter
   submitCode: {
     code: string;
+    lang: string;
   };
 }
 
@@ -47,12 +56,25 @@ const getters: DefineGetters<ExecuteDataGetters, ExecuteDataStates> = {
 
 // action 非同期 dispatcher
 const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataMutations, ExecuteDataGetters> = {
-  // payload = {code: string}
+  // payload = {code: string; lang: string}
   submitCode({commit}, payload) {
+    const _original_console_log: (message?: any, ...optionalParams: any[]) => void = console.log;
+    let out: string = '';
+
+    console.log = function() {
+      for (let i = 0; i < arguments.length; i++) {
+        // _original_console_log(out)
+        out += String(arguments[i]) + ' '
+      }
+
+      out += '\n'
+    }
+
+
+    commit('pushCode', payload);
+    commit('pushLanguage', payload);
     // non-null
     let result: string = state.code;
-    // console.log(languages.TS_BROWSER);
-    commit('pushCode', payload);
     switch (state.lang) {
       case languages.TS_BROWSER: 
         result = ts.transpile(state.code);
@@ -65,6 +87,10 @@ const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataM
     const func = new Function(result);
     // execute
     func();
+
+    commit('pushOutput', { 'out': out } );
+
+    // _original_console_log(state.output);
   },
 };
 
@@ -72,9 +98,17 @@ const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataM
 const mutations: DefineMutations<ExecuteDataMutations, ExecuteDataStates> = {
   // payload = {code: string}
   pushCode(state, { code }) {
-    console.log(code);
+    // console.log(code);
     state.code = code;
   },
+
+  pushLanguage(state, { lang }) {
+    state.lang = languages[lang];
+  },
+
+  pushOutput(state, { out }) {
+    state.output = out;
+  }
 };
 
 export default {
