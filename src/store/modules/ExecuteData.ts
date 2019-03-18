@@ -51,7 +51,7 @@ const state: ExecuteDataStates = {
 };
 
 const getters: DefineGetters<ExecuteDataGetters, ExecuteDataStates> = {
-  getOutput: (state) => state.output,
+  getOutput: (state) => { return state.output; },
 };
 
 // action 非同期 dispatcher
@@ -66,10 +66,8 @@ const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataM
         // _original_console_log(out)
         out += String(arguments[i]) + ' '
       }
-
       out += '\n'
     }
-
 
     commit('pushCode', payload);
     commit('pushLanguage', payload);
@@ -83,14 +81,14 @@ const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataM
         // doesn't need transpile
         ;
     }
+    
     // create function
     const func = new Function(result);
     // execute
     func();
 
     commit('pushOutput', { 'out': out } );
-
-    // _original_console_log(state.output);
+    _original_console_log("console -> "+ state.output);
   },
 };
 

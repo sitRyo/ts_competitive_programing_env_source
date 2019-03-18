@@ -38,13 +38,16 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-
 @Component
 export default class IO extends Vue {
   private time: number = 0;
   private input: string = '';
-  private output: string = '';
   private error: string = '';
+
+  get output(): string {
+    console.log(this.$store);
+    return this.$store.getters['executedata/getOutput'];
+  }
 }
 
 </script>
