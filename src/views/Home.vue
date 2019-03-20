@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class="app-wrapper">
     <div class="home">
       <b-row>
         <b-col class="w-100" cols="8">
@@ -26,3 +26,11 @@ import IO from '@/components/IO.vue';
 })
 export default class Home extends Vue {}
 </script>
+
+<style scoped>
+.app-wrapper {
+  padding-top: 3vh;
+  height: 100vh;
+  box-shadow: 0px 0px 10px 5px #888;
+}
+</style>

@@ -48,7 +48,7 @@ export default class Editor extends Vue {
     const root = document.getElementById('container');
     if (root !== null) {
       this.editor = monaco.editor.create(root, {
-        value: '// 使用したい言語を下のフォームからえらんでください.',
+        value: `// 使用したい言語を下のフォームからえらんでください.\nfunction Main(input){\n\n}\n\nMain(require('fs').readFileSync('/dev/stdin', 'utf8'));\n//このテンプレートは変更しないでください。`,
         language: 'javascript',
         theme: 'vs-dark',
         roundedSelection: false,
@@ -79,7 +79,7 @@ export default class Editor extends Vue {
 
 .editor-wrapper {
   text-align: left;
-  height: 70vh;
+  height: 80vh;
 }
 
 .button-wrapper {

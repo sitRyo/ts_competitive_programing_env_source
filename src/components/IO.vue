@@ -58,7 +58,6 @@ export default class IO extends Vue {
 
   @Watch('input')
   onInputChanged (val: string) {
-    console.log(val);
     this.$store.dispatch('executedata/submitInput', { 'input': this.input });
   }
 }
