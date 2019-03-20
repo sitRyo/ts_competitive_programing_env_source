@@ -1,7 +1,6 @@
 import { DefineGetters, DefineMutations, DefineActions, Dispatcher, Committer } from 'vuex-type-helper';
 import * as ts from 'typescript';
 import { languages } from '@/assets/ts/language-enums';
-import { constants } from '@/assets/ts/constants';
 
 export interface ExecuteDataStates {
   code: string;
@@ -84,18 +83,30 @@ const getters: DefineGetters<ExecuteDataGetters, ExecuteDataStates> = {
 const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataMutations, ExecuteDataGetters> = {
   // payload = {code: string; lang: string;}
   submitCode({ commit }, payload) {
-    /**** NOTE overrided console.log, so use _original_console_log method instead of that. */
+    /**** NOTE console.log is overrided, so use _original_console_log method instead of this. */
     const _original_console_log: (message?: any, ...optionalParams: any[]) => void = console.log;
-    const _original_console_error: (message?: any, ...optionalParams: any[]) => void = console.error;
     let out: string = '';
     let error: string = '';
     
     console.log = function() {
-      for (let i = 0; i < arguments.length; i++) {
-        // _original_console_log(out)
-        out += String(arguments[i]) + ' '
+      const re = /%d|%s|%\.?[0-9]+d|%i|%\.?[0-9]+f/;
+      let firstString: string = arguments[0];  
+      let flag: boolean = true;
+      for (let i = 1; i < arguments.length; i++) {
+        _original_console_log(arguments[i]);
+        if (firstString.search(re) > -1) {
+          firstString = firstString.replace(re, arguments[i]);
+        } else {
+          if (flag) {
+            out += '\n';
+            flag = false;
+          }
+          out += String(arguments[i]) + ' ';
+          out += '\n';
+        }
       }
-      out += '\n'
+      // _original_console_log(firstString);
+      if (flag) out += firstString + '\n';
     }
 
     commit('pushCode', payload);
@@ -104,7 +115,8 @@ const actions: DefineActions<ExecuteDataActions, ExecuteDataStates, ExecuteDataM
     let result: string = state.code;
     switch (state.lang) {
       case languages.TS_BROWSER: 
-        result = ts.transpile(state.code);
+        /**** TODO: make user select transpile version */ 
+        result = ts.transpile(state.code); // version 3.3333
         break;
       default: 
         // doesn't need transpile
