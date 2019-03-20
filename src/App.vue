@@ -6,7 +6,7 @@
         <router-link to="/">Home</router-link>
       </span>
       <span class="router-button">
-        <router-link to="/about">お問合せ</router-link>
+        <router-link to="/about">使い方・お問合せ</router-link>
       </span>
     </div>
     <router-view/>

@@ -12,10 +12,11 @@
     <div class="error-area">
       <div class="text-area-message pl-5 pb-1 pt-2">error</div>
       <b-form-textarea
+        class="error-code"
         id="textarea"
         v-model="error"
         rows="2"
-        max-rows="2"
+        max-rows="6"
       />
     </div>
     <div class="output-area">
@@ -25,28 +26,40 @@
         v-model="output"
         rows="8"
         max-rows="8"
+        readonly
       />
     </div>
     <div class="time-area">
-      <div class="text-area-message pl-5 pb-1 pt-2">time: <span class="output-time">{{time}} msec</span></div>
+      <div class="text-area-message pl-5 pb-1 pt-2">time: <span class="output-time">{{getTime}} ms</span></div>
     </div>
   </b-container>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 @Component
 export default class IO extends Vue {
-  private time: number = 0;
   private input: string = '';
-  private error: string = '';
+
+  get error(): string {
+    return this.$store.getters['executedata/getError'];
+  }
 
   get output(): string {
-    console.log(this.$store);
     return this.$store.getters['executedata/getOutput'];
+  }
+
+  get getTime(): number {
+    return this.$store.getters['executedata/getTime'];
+  }
+
+  @Watch('input')
+  onInputChanged (val: string) {
+    console.log(val);
+    this.$store.dispatch('executedata/submitInput', { 'input': this.input });
   }
 }
 
@@ -60,6 +73,10 @@ export default class IO extends Vue {
 
 .time-area {
   text-align: left;
+}
+
+.error-code {
+  color: #cc0000
 }
 </style>
 
