@@ -21,18 +21,20 @@
   text-align: center;
   color: #2c3e50;
 }
+
 #nav {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  background-color: #101010;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #9D9D9D;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #FFF;
 }
 
 .router-button {
@@ -40,8 +42,9 @@
 }
 
 .router-text-codetest {
+  color: #FFF;
   padding-right: 50vw;
-  font-size: 150%;
+  font-size: 120%;
   font-weight: 600;
 }
 
